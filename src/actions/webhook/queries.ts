@@ -110,19 +110,18 @@ export const getChatHistory = async (sender: string, reciever: string) => {
     },
     orderBy: { createdAt: "asc" },
   });
-
   const chatSession: {
     role: "assistant" | "user";
     content: string;
   }[] = history.map((chat) => {
     return {
-      role: chat.reciever ? "assistant" : "user", // Default to "user" if `reciever` is null
-      content: chat.message ?? "", // Default to an empty string if `message` is null
+      role: chat.reciever ? "assistant" : "user",
+      content: chat.message!,
     };
   });
 
   return {
     history: chatSession,
-    automationId: history[history.length - 1]?.automationId || null, // Handle empty array case
+    automationId: history[history.length - 1].automationId,
   };
 };
